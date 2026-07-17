@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Smart Ration Shop",
+    "slug": "smart-ration-shop",
+    "scheme": "smart-rations",
+    "orientation": "portrait",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.smart.rationshop"
+    }
+  }
+}
