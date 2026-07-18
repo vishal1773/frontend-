@@ -4,20 +4,30 @@ import { theme } from '../theme/theme';
 
 type Props = {
   active: string;
+  variant?: 'citizen' | 'shopkeeper';
+  onTabPress?: (key: string) => void;
 };
 
-const tabs = [
+const citizenTabs = [
   { key: 'dashboard', label: 'Dashboard', icon: '🏠' },
   { key: 'quota', label: 'Quota', icon: '📦' },
   { key: 'complaints', label: 'Complaints', icon: '⚠️' },
   { key: 'profile', label: 'Profile', icon: '👤' },
 ];
 
-export default function BottomNavigation({ active }: Props) {
+const shopkeeperTabs = [
+  { key: 'home', label: 'Home', icon: '🏠' },
+  { key: 'stock', label: 'Stock', icon: '📦' },
+  { key: 'reports', label: 'Reports', icon: '📊' },
+  { key: 'profile', label: 'Profile', icon: '👤' },
+];
+
+export default function BottomNavigation({ active, variant = 'citizen', onTabPress }: Props) {
+  const tabs = variant === 'shopkeeper' ? shopkeeperTabs : citizenTabs;
   return (
     <View style={styles.container}>
       {tabs.map((tab) => (
-        <Pressable key={tab.key} style={styles.tab}>
+        <Pressable key={tab.key} style={styles.tab} onPress={() => onTabPress?.(tab.key)}>
           <Text style={styles.icon}>{tab.icon}</Text>
           <Text style={[styles.label, active === tab.key && styles.activeLabel]}>{tab.label}</Text>
         </Pressable>

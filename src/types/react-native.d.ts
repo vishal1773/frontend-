@@ -7,3 +7,12 @@ declare module 'react-native' {
   export const TextInput: any;
   export const ScrollView: any;
 }
+
+declare module 'react-native-gesture-handler' {
+  import { ComponentType, ReactNode } from 'react';
+
+  export const GestureHandlerRootView: ComponentType<{
+    children?: ReactNode;
+    style?: any;
+  }>;
+}

@@ -33,7 +33,7 @@ export default function CitizenRegistrationScreen({ navigation }: Props) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
       <View style={styles.card}>
         <Text style={styles.eyebrow}>Citizen registration</Text>
         <Text style={styles.title}>Create citizen profile</Text>
@@ -50,6 +50,9 @@ export default function CitizenRegistrationScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#F1F5F9',

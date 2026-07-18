@@ -14,7 +14,7 @@ import { apiRequest } from '../../services/api';
 
 type Props = StackScreenProps<AuthStackParamList, 'CitizenDashboard'>;
 
-export default function CitizenDashboardScreen({ route }: Props) {
+export default function CitizenDashboardScreen({ navigation, route }: Props) {
   const { phone, token } = route.params || { phone: '', token: '' };
   const [viewportHeight, setViewportHeight] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
@@ -32,6 +32,12 @@ export default function CitizenDashboardScreen({ route }: Props) {
 
   const handleScroll = (event: any) => {
     setScrollTop(event.nativeEvent.contentOffset.y);
+  };
+
+  const handleTabPress = (tab: string) => {
+    if (tab === 'quota') navigation.navigate('CitizenQuota');
+    if (tab === 'complaints') navigation.navigate('CitizenComplaints');
+    if (tab === 'profile') navigation.navigate('CitizenProfile');
   };
 
   const thumbHeight = viewportHeight > 0 && contentHeight > viewportHeight
@@ -111,12 +117,12 @@ export default function CitizenDashboardScreen({ route }: Props) {
         </ScrollView>
 
         {viewportHeight > 0 && contentHeight > viewportHeight ? (
-          <View style={styles.scrollbarTrack}>
+          <View pointerEvents="none" style={styles.scrollbarTrack}>
             <View style={[styles.scrollbarThumb, { height: thumbHeight, top: thumbTop }]} />
           </View>
         ) : null}
       </View>
-      <BottomNavigation active="dashboard" />
+      <BottomNavigation active="dashboard" onTabPress={handleTabPress} />
     </View>
   );
 }

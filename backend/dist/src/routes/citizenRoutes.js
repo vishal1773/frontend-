@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const citizenController_1 = require("../controllers/citizenController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const router = (0, express_1.Router)();
+router.use(authMiddleware_1.authMiddleware, (0, authMiddleware_1.authorizeRoles)('CITIZEN'));
+router.get('/dashboard', citizenController_1.citizenController.dashboard);
+router.get('/quota', citizenController_1.citizenController.quota);
+router.get('/transactions', citizenController_1.citizenController.transactions);
+router.get('/complaints', citizenController_1.citizenController.complaints);
+router.get('/notifications', citizenController_1.citizenController.notifications);
+router.get('/profile', citizenController_1.citizenController.profile);
+exports.default = router;

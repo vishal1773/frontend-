@@ -13,7 +13,7 @@ export default function DistrictOfficerRegistrationScreen({ navigation }: Props)
   const [employeeId, setEmployeeId] = useState('');
 
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
       <View style={styles.card}>
         <Text style={styles.eyebrow}>District officer registration</Text>
         <Text style={styles.title}>Create district profile</Text>
@@ -30,6 +30,9 @@ export default function DistrictOfficerRegistrationScreen({ navigation }: Props)
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#F1F5F9',

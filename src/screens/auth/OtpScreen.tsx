@@ -35,7 +35,7 @@ export default function OtpScreen({ navigation, route }: Props) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
       <View style={styles.card}>
         <Text style={styles.eyebrow}>Verification</Text>
         <Text style={styles.title}>Enter OTP</Text>
@@ -62,6 +62,9 @@ export default function OtpScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#F1F5F9',

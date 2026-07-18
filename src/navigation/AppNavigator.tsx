@@ -10,6 +10,10 @@ import ShopkeeperRegistrationScreen from '../screens/auth/ShopkeeperRegistration
 import DistrictOfficerRegistrationScreen from '../screens/auth/DistrictOfficerRegistrationScreen';
 import StateAdminRegistrationScreen from '../screens/auth/StateAdminRegistrationScreen';
 import CitizenDashboardScreen from '../screens/citizen/CitizenDashboardScreen';
+import ShopkeeperDashboardScreen from '../screens/shopkeeper/ShopkeeperDashboardScreen';
+import QuotaScreen from '../screens/citizen/QuotaScreen';
+import ComplaintsScreen from '../screens/citizen/ComplaintsScreen';
+import ProfileScreen from '../screens/citizen/ProfileScreen';
 
 export type AuthStackParamList = {
   Splash: undefined;
@@ -21,6 +25,10 @@ export type AuthStackParamList = {
   DistrictOfficerRegistration: undefined;
   StateAdminRegistration: undefined;
   CitizenDashboard: { phone: string; token?: string };
+  ShopkeeperDashboard: undefined;
+  CitizenQuota: undefined;
+  CitizenComplaints: undefined;
+  CitizenProfile: undefined;
 };
 
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -28,7 +36,10 @@ const Stack = createStackNavigator<AuthStackParamList>();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{ headerShown: false, cardStyle: { flex: 1 } }}
+      >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="OTP" component={OtpScreen} />
@@ -38,6 +49,10 @@ export default function AppNavigator() {
         <Stack.Screen name="DistrictOfficerRegistration" component={DistrictOfficerRegistrationScreen} />
         <Stack.Screen name="StateAdminRegistration" component={StateAdminRegistrationScreen} />
         <Stack.Screen name="CitizenDashboard" component={CitizenDashboardScreen} />
+        <Stack.Screen name="CitizenQuota" component={QuotaScreen} />
+        <Stack.Screen name="CitizenComplaints" component={ComplaintsScreen} />
+        <Stack.Screen name="CitizenProfile" component={ProfileScreen} />
+        <Stack.Screen name="ShopkeeperDashboard" component={ShopkeeperDashboardScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

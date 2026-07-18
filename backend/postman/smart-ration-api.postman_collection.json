@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "Smart Ration Shop Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Test Citizen\",\n  \"mobileNumber\": \"9000000099\",\n  \"password\": \"ChangeMe123!\",\n  \"role\": \"CITIZEN\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobileNumber\": \"9000000001\",\n  \"password\": \"ChangeMe123!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mobileNumber\": \"9000000001\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/send-otp", "host": ["{{baseUrl}}"], "path": ["api", "auth", "send-otp"] }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mobileNumber\": \"9000000001\",\n  \"code\": \"123456\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/verify-otp", "host": ["{{baseUrl}}"], "path": ["api", "auth", "verify-otp"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Citizen",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/citizen/dashboard", "host": ["{{baseUrl}}"], "path": ["api", "citizen", "dashboard"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shopkeeper",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/dashboard", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "dashboard"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "IoT",
+      "item": [
+        {
+          "name": "Register Device",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"deviceId\": \"ESP32-001\",\n  \"shopCode\": \"FPS-102\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/iot/devices/register", "host": ["{{baseUrl}}"], "path": ["api", "iot", "devices", "register"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" }
+  ]
+}

@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const shopkeeperController_1 = require("../controllers/shopkeeperController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const router = (0, express_1.Router)();
+router.use(authMiddleware_1.authMiddleware, (0, authMiddleware_1.authorizeRoles)('SHOPKEEPER'));
+router.get('/dashboard', shopkeeperController_1.shopkeeperController.dashboard);
+router.post('/scan-beneficiary', shopkeeperController_1.shopkeeperController.scanBeneficiary);
+router.post('/issue-ration', shopkeeperController_1.shopkeeperController.issueRation);
+router.get('/stock', shopkeeperController_1.shopkeeperController.stock);
+router.get('/reports', shopkeeperController_1.shopkeeperController.reports);
+exports.default = router;

@@ -13,7 +13,7 @@ export default function ShopkeeperRegistrationScreen({ navigation }: Props) {
   const [license, setLicense] = useState('');
 
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
       <View style={styles.card}>
         <Text style={styles.eyebrow}>Shopkeeper registration</Text>
         <Text style={styles.title}>Register your shop</Text>
@@ -23,13 +23,16 @@ export default function ShopkeeperRegistrationScreen({ navigation }: Props) {
         <AppInput label="Shop Name" value={shopName} onChangeText={setShopName} placeholder="Sharma Fair Price Shop" />
         <AppInput label="License Number" value={license} onChangeText={(value) => setLicense(value.toUpperCase())} placeholder="LIC-2048" />
 
-        <AppButton title="Create Account" onPress={() => navigation.navigate('Login')} />
+        <AppButton title="Create Account" onPress={() => navigation.replace('ShopkeeperDashboard')} />
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#F1F5F9',

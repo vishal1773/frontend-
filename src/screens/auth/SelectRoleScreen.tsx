@@ -15,7 +15,7 @@ const roles = [
 
 export default function SelectRoleScreen({ navigation }: Props) {
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.container} showsVerticalScrollIndicator persistentScrollbar>
       <View style={styles.card}>
         <Text style={styles.eyebrow}>Choose your role</Text>
         <Text style={styles.title}>Select access level</Text>
@@ -34,6 +34,9 @@ export default function SelectRoleScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#F1F5F9',

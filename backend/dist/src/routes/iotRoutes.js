@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const iotController_1 = require("../controllers/iotController");
+const router = (0, express_1.Router)();
+router.post('/devices/register', iotController_1.iotController.registerDevice);
+router.post('/stock-data', iotController_1.iotController.stockData);
+router.post('/sensor-data', iotController_1.iotController.sensorData);
+router.get('/live-stock', iotController_1.iotController.liveStock);
+exports.default = router;
