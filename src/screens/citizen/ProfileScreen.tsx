@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import BottomNavigation from '../../components/BottomNavigation';
 import { AuthStackParamList } from '../../navigation/AppNavigator';
 import { theme } from '../../theme/theme';
+import { findCandidateByPhone } from '../../services/authStorage';
 
 type Props = StackScreenProps<AuthStackParamList, 'CitizenProfile'>;
-const details = [['Mobile Number', '+91 98765 43210'], ['Ration Card Number', 'TN-102-458-921'], ['Aadhaar', 'XXXX XXXX 1234'], ['Address', 'House 12, Ward 3, Bengaluru'], ['District', 'Bengaluru'], ['Family Members', '4 Members'], ['Language Preference', 'English']];
 const actions = ['Edit Profile', 'Change Language', 'Help & Support', 'Privacy Policy', 'Logout'];
 
-export default function ProfileScreen({ navigation }: Props) {
+export default function ProfileScreen({ navigation, route }: Props) {
+  const [profile, setProfile] = useState<any>(null);
+  const phone = route.params?.phone || '9876543210';
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const savedProfile = await findCandidateByPhone(phone);
+      if (savedProfile) {
+        setProfile(savedProfile);
+      }
+    };
+
+    loadProfile();
+  }, [phone]);
+
   const goTo = (tab: string) => {
-    if (tab === 'dashboard') navigation.navigate('CitizenDashboard', { phone: '9876543210' });
+    if (tab === 'dashboard') navigation.navigate('CitizenDashboard', { phone });
     if (tab === 'quota') navigation.navigate('CitizenQuota');
     if (tab === 'complaints') navigation.navigate('CitizenComplaints');
   };
+
+  const details = [
+    ['Mobile Number', phone],
+    ['Ration Card Number', 'TN-102-458-921'],
+    ['Aadhaar', profile?.aadhaar || '—'],
+    ['Address', profile?.address || '—'],
+    ['District', 'Bengaluru'],
+    ['Family Members', '4 Members'],
+    ['Language Preference', 'English'],
+  ];
+
   return <View style={styles.wrapper}><ScrollView style={styles.scrollView} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
     <Text style={styles.eyebrow}>ACCOUNT</Text><Text style={styles.title}>Profile</Text>
-    <View style={styles.profileHeader}><View style={styles.avatar}><Text style={styles.avatarText}>A</Text></View><Text style={styles.name}>Aarav Kumar</Text><Text style={styles.subtext}>Citizen account</Text></View>
+    <View style={styles.profileHeader}><View style={styles.avatar}><Text style={styles.avatarText}>{(profile?.fullName || 'U').charAt(0).toUpperCase()}</Text></View><Text style={styles.name}>{profile?.fullName || 'User'}</Text><Text style={styles.subtext}>Citizen account</Text></View>
     <View style={styles.card}>{details.map(([label, value], index) => <View key={label} style={[styles.detailRow, index < details.length - 1 && styles.border]}><Text style={styles.detailLabel}>{label}</Text><Text style={styles.detailValue}>{value}</Text></View>)}</View>
     <Text style={styles.sectionTitle}>Actions</Text><View style={styles.card}>{actions.map((action, index) => <Pressable key={action} style={[styles.action, index < actions.length - 1 && styles.border]}><Text style={[styles.actionText, action === 'Logout' && styles.logout]}>{action}</Text><Text style={styles.arrow}>›</Text></Pressable>)}</View>
   </ScrollView><BottomNavigation active="profile" onTabPress={goTo} /></View>;

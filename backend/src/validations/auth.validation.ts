@@ -18,10 +18,20 @@ export const otpSchema = z.object({
   mobileNumber: z.string().min(8),
 });
 
-export const verifyOtpSchema = z.object({
-  mobileNumber: z.string().min(8),
-  code: z.string().length(6),
-});
+export const verifyOtpSchema = z
+  .object({
+    mobileNumber: z.string().min(8),
+    code: z.string().length(6).optional(),
+    otp: z.string().length(6).optional(),
+  })
+  .refine((data) => data.code || data.otp, {
+    message: 'OTP is required',
+    path: ['code'],
+  })
+  .transform(({ mobileNumber, code, otp }) => ({
+    mobileNumber,
+    code: code ?? otp ?? '',
+  }));
 
 export const refreshTokenSchema = z.object({
   refreshToken: z.string().min(10),

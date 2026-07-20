@@ -5,6 +5,7 @@ type MemoryOtp = {
   consumedAt?: Date | null;
   id: string;
   createdAt: Date;
+  userId?: string | null;
 };
 
 type MemoryRefreshToken = {
@@ -44,6 +45,7 @@ export const memoryStore = {
       expiresAt,
       createdAt: new Date(),
       consumedAt: null,
+      userId: null,
     };
     otpStore.set(mobileNumber, record);
     return record;

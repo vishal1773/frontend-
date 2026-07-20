@@ -11,6 +11,9 @@ import DistrictOfficerRegistrationScreen from '../screens/auth/DistrictOfficerRe
 import StateAdminRegistrationScreen from '../screens/auth/StateAdminRegistrationScreen';
 import CitizenDashboardScreen from '../screens/citizen/CitizenDashboardScreen';
 import ShopkeeperDashboardScreen from '../screens/shopkeeper/ShopkeeperDashboardScreen';
+import StockScreen from '../screens/shopkeeper/StockScreen';
+import ReportsScreen from '../screens/shopkeeper/ReportsScreen';
+import ShopkeeperProfileScreen from '../screens/shopkeeper/ShopkeeperProfileScreen';
 import QuotaScreen from '../screens/citizen/QuotaScreen';
 import ComplaintsScreen from '../screens/citizen/ComplaintsScreen';
 import ProfileScreen from '../screens/citizen/ProfileScreen';
@@ -26,9 +29,12 @@ export type AuthStackParamList = {
   StateAdminRegistration: undefined;
   CitizenDashboard: { phone: string; token?: string };
   ShopkeeperDashboard: undefined;
+  ShopkeeperStock: undefined;
+  ShopkeeperReports: undefined;
+  ShopkeeperProfile: undefined;
   CitizenQuota: undefined;
   CitizenComplaints: undefined;
-  CitizenProfile: undefined;
+  CitizenProfile: { phone?: string } | undefined;
 };
 
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -53,6 +59,9 @@ export default function AppNavigator() {
         <Stack.Screen name="CitizenComplaints" component={ComplaintsScreen} />
         <Stack.Screen name="CitizenProfile" component={ProfileScreen} />
         <Stack.Screen name="ShopkeeperDashboard" component={ShopkeeperDashboardScreen} />
+        <Stack.Screen name="ShopkeeperStock" component={StockScreen} />
+        <Stack.Screen name="ShopkeeperReports" component={ReportsScreen} />
+        <Stack.Screen name="ShopkeeperProfile" component={ShopkeeperProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

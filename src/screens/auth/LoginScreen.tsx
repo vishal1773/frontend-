@@ -68,6 +68,13 @@ export default function LoginScreen({ navigation }: Props) {
             style={styles.button}
           />
 
+          <AppButton
+            title="Register New User"
+            onPress={() => navigation.navigate('SelectRole')}
+            variant="secondary"
+            style={styles.secondaryButton}
+          />
+
           {isSubmitting ? (
             <View style={styles.loaderRow}>
               <ActivityIndicator color={theme.colors.primary} />
@@ -130,6 +137,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   button: {
+    marginTop: theme.spacing.sm,
+  },
+  secondaryButton: {
     marginTop: theme.spacing.sm,
   },
   loaderRow: {

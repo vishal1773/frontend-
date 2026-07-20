@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text } from 'react-native-paper';
 import { theme } from '../theme/theme';
 
 type Props = {
@@ -9,29 +11,37 @@ type Props = {
 };
 
 const citizenTabs = [
-  { key: 'dashboard', label: 'Dashboard', icon: '🏠' },
-  { key: 'quota', label: 'Quota', icon: '📦' },
-  { key: 'complaints', label: 'Complaints', icon: '⚠️' },
-  { key: 'profile', label: 'Profile', icon: '👤' },
+  { key: 'dashboard', label: 'Dashboard', icon: 'home-outline' },
+  { key: 'quota', label: 'Quota', icon: 'package-variant-closed' },
+  { key: 'complaints', label: 'Complaints', icon: 'alert-circle-outline' },
+  { key: 'profile', label: 'Profile', icon: 'account-outline' },
 ];
 
 const shopkeeperTabs = [
-  { key: 'home', label: 'Home', icon: '🏠' },
-  { key: 'stock', label: 'Stock', icon: '📦' },
-  { key: 'reports', label: 'Reports', icon: '📊' },
-  { key: 'profile', label: 'Profile', icon: '👤' },
+  { key: 'home', label: 'Home', icon: 'home-outline' },
+  { key: 'stock', label: 'Stock', icon: 'cube-outline' },
+  { key: 'reports', label: 'Reports', icon: 'chart-line' },
+  { key: 'profile', label: 'Profile', icon: 'account-outline' },
 ];
 
 export default function BottomNavigation({ active, variant = 'citizen', onTabPress }: Props) {
   const tabs = variant === 'shopkeeper' ? shopkeeperTabs : citizenTabs;
+
   return (
     <View style={styles.container}>
-      {tabs.map((tab) => (
-        <Pressable key={tab.key} style={styles.tab} onPress={() => onTabPress?.(tab.key)}>
-          <Text style={styles.icon}>{tab.icon}</Text>
-          <Text style={[styles.label, active === tab.key && styles.activeLabel]}>{tab.label}</Text>
-        </Pressable>
-      ))}
+      {tabs.map((tab) => {
+        const isActive = active === tab.key;
+        return (
+          <Pressable key={tab.key} style={styles.tab} onPress={() => onTabPress?.(tab.key)}>
+            <MaterialCommunityIcons
+              name={tab.icon as never}
+              size={20}
+              color={isActive ? theme.colors.primary : theme.colors.textMuted}
+            />
+            <Text style={[styles.label, isActive && styles.activeLabel]}>{tab.label}</Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
@@ -50,13 +60,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  icon: {
-    fontSize: 18,
-    marginBottom: 4,
-  },
   label: {
     fontSize: 11,
     color: theme.colors.textMuted,
+    marginTop: 4,
   },
   activeLabel: {
     color: theme.colors.primary,

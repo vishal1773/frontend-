@@ -11,6 +11,7 @@ import QuickActionCard from '../../components/QuickActionCard';
 import { dashboardCards, notifications, quickActions } from '../../constants/dummyData';
 import { theme } from '../../theme/theme';
 import { apiRequest } from '../../services/api';
+import { findCandidateByPhone } from '../../services/authStorage';
 
 type Props = StackScreenProps<AuthStackParamList, 'CitizenDashboard'>;
 
@@ -20,6 +21,7 @@ export default function CitizenDashboardScreen({ navigation, route }: Props) {
   const [contentHeight, setContentHeight] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
   const [dashboardData, setDashboardData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   const handleLayout = (event: any) => {
@@ -50,12 +52,17 @@ export default function CitizenDashboardScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     const loadDashboard = async () => {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
       try {
+        const savedProfile = await findCandidateByPhone(phone);
+        if (savedProfile) {
+          setProfileData(savedProfile);
+        }
+
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
         const response = await apiRequest('/citizen/dashboard', {
           method: 'GET',
           headers: {
@@ -72,7 +79,7 @@ export default function CitizenDashboardScreen({ navigation, route }: Props) {
     };
 
     loadDashboard();
-  }, [token]);
+  }, [phone, token]);
 
   return (
     <View style={styles.wrapper}>
@@ -87,7 +94,7 @@ export default function CitizenDashboardScreen({ navigation, route }: Props) {
           onContentSizeChange={handleContentSizeChange}
           onScroll={handleScroll}
         >
-          <Header name={dashboardData?.name || 'Citizen'} district={dashboardData?.district || 'Madurai'} />
+          <Header name={profileData?.fullName || dashboardData?.name || 'Citizen'} district={profileData?.address || dashboardData?.district || 'Madurai'} />
           <Text style={styles.phoneText}>Phone: {phone}</Text>
           {loading ? <Text style={styles.loadingText}>Loading dashboard...</Text> : null}
           <View style={styles.panelBox}>

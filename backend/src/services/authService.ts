@@ -64,7 +64,16 @@ export const authService = {
     }
 
     await authRepository.consumeOtp(latestOtp.id);
-    return { verified: true };
+
+    const token = signAccessToken({
+      id: input.mobileNumber,
+      fullName: 'Verified User',
+      mobileNumber: input.mobileNumber,
+      role: 'CITIZEN' as any,
+      districtId: undefined,
+    });
+
+    return { verified: true, token };
   },
 
   async refreshToken(input: RefreshTokenInput) {

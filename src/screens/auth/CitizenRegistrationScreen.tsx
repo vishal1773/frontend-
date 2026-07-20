@@ -5,20 +5,21 @@ import { AuthStackParamList } from '../../navigation/AppNavigator';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
 import { saveCandidate } from '../../services/authStorage';
+import { theme } from '../../theme/theme';
 
 type Props = StackScreenProps<AuthStackParamList, 'CitizenRegistration'>;
 
 export default function CitizenRegistrationScreen({ navigation }: Props) {
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [aadhaar, setAadhaar] = useState('');
   const [address, setAddress] = useState('');
 
   const handleCreate = async () => {
-    if (!name || !aadhaar || !address) {
+    if (!name || !phone || !aadhaar || !address) {
       return;
     }
 
-    const phone = '9876543210';
     await saveCandidate({
       id: `candidate-${Date.now()}`,
       phone,
@@ -29,7 +30,7 @@ export default function CitizenRegistrationScreen({ navigation }: Props) {
       createdAt: new Date().toISOString(),
     });
 
-    navigation.replace('CitizenDashboard', { phone });
+    navigation.replace('CitizenDashboard', { phone, token: '' });
   };
 
   return (
@@ -40,6 +41,7 @@ export default function CitizenRegistrationScreen({ navigation }: Props) {
         <Text style={styles.subtitle}>This screen saves sample candidate data locally and lets the phone number open the dashboard.</Text>
 
         <AppInput label="Full Name" value={name} onChangeText={setName} placeholder="Aarav Kumar" />
+        <AppInput label="Mobile Number" value={phone} onChangeText={(value) => setPhone(value.replace(/[^0-9]/g, '').slice(0, 10))} placeholder="9876543210" keyboardType="number-pad" />
         <AppInput label="Aadhaar Number" value={aadhaar} onChangeText={(value) => setAadhaar(value.replace(/[^0-9]/g, '').slice(0, 12))} placeholder="123412341234" keyboardType="number-pad" />
         <AppInput label="Residential Address" value={address} onChangeText={setAddress} placeholder="House 12, Ward 3" />
 
@@ -69,19 +71,19 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   eyebrow: {
-    color: '#0F766E',
+    color: theme.colors.primary,
     fontWeight: '700',
     marginBottom: 8,
   },
   title: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#0F172A',
+    color: theme.colors.text,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 14,
-    color: '#64748B',
+    color: theme.colors.textMuted,
     marginBottom: 20,
     lineHeight: 20,
   },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../theme/theme';
 
 type Props = {
@@ -11,10 +12,16 @@ type Props = {
 };
 
 export default function DashboardCard({ title, value, hint, icon, color }: Props) {
+  const isVectorIcon = icon.includes('-') || icon.includes('outline') || icon.includes('solid');
+
   return (
     <View style={[styles.card, { borderColor: color }]}>
       <View style={[styles.iconWrap, { backgroundColor: color + '20' }]}>
-        <Text style={styles.icon}>{icon}</Text>
+        {isVectorIcon ? (
+          <MaterialCommunityIcons name={icon as never} size={20} color={color} />
+        ) : (
+          <Text style={styles.icon}>{icon}</Text>
+        )}
       </View>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.value}>{value}</Text>

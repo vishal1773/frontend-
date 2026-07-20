@@ -5,6 +5,7 @@ import { AuthStackParamList } from '../../navigation/AppNavigator';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
 import { apiRequest } from '../../services/api';
+import { findCandidateByPhone } from '../../services/authStorage';
 
 type Props = StackScreenProps<AuthStackParamList, 'OTP'>;
 
@@ -28,7 +29,14 @@ export default function OtpScreen({ navigation, route }: Props) {
         body: JSON.stringify({ mobileNumber: route.params.phone, otp }),
       });
 
-      navigation.replace('CitizenDashboard', { phone: route.params.phone, token: response.token });
+      const token = response.token ?? response.data?.token;
+      const profile = await findCandidateByPhone(route.params.phone);
+
+      if (profile) {
+        navigation.replace('CitizenDashboard', { phone: route.params.phone, token });
+      } else {
+        navigation.replace('CitizenDashboard', { phone: route.params.phone, token });
+      }
     } catch (err: any) {
       setError(err.message || 'OTP verification failed');
     }

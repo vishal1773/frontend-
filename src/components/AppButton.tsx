@@ -6,7 +6,7 @@ type Props = {
   onPress: () => void;
   variant?: 'primary' | 'secondary';
   disabled?: boolean;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
 };
 
 export default function AppButton({ title, onPress, variant = 'primary', disabled = false, style }: Props) {
@@ -14,7 +14,7 @@ export default function AppButton({ title, onPress, variant = 'primary', disable
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={({ pressed }) => [
+      style={({ pressed }: { pressed: boolean }) => [
         styles.base,
         variant === 'secondary' ? styles.secondary : styles.primary,
         disabled && styles.disabled,

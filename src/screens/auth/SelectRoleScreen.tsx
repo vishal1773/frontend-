@@ -7,10 +7,10 @@ import AppButton from '../../components/AppButton';
 type Props = StackScreenProps<AuthStackParamList, 'SelectRole'>;
 
 const roles = [
-  { title: 'Citizen', route: 'CitizenRegistration' as keyof AuthStackParamList, description: 'Access ration quota, complaints, and notifications.' },
-  { title: 'Shopkeeper', route: 'ShopkeeperRegistration' as keyof AuthStackParamList, description: 'Issue ration and manage stock for your shop.' },
-  { title: 'District Officer', route: 'DistrictOfficerRegistration' as keyof AuthStackParamList, description: 'Monitor district-level ration operations.' },
-  { title: 'State Admin', route: 'StateAdminRegistration' as keyof AuthStackParamList, description: 'Manage state-wide governance and reports.' },
+  { title: 'Citizen', route: 'CitizenRegistration' as const, description: 'Access ration quota, complaints, and notifications.' },
+  { title: 'Shopkeeper', route: 'ShopkeeperRegistration' as const, description: 'Issue ration and manage stock for your shop.' },
+  { title: 'District Officer', route: 'DistrictOfficerRegistration' as const, description: 'Monitor district-level ration operations.' },
+  { title: 'State Admin', route: 'StateAdminRegistration' as const, description: 'Manage state-wide governance and reports.' },
 ];
 
 export default function SelectRoleScreen({ navigation }: Props) {
